@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "engine": {
-    "node": "23"
+    "node": "18"
   },
   "scripts": {
     "dev": "tsx src/server.ts",
