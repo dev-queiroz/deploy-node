@@ -4,11 +4,12 @@ import { supabase } from "./supabaseConnection";
 const app = fastify();
 
 type users = {
+    id: string;
     name: string,
     email: string
 }
 
-app.get("/users", async () => {
+app.get("/users", async (req, res) => {
     try{
         const { data: users } = await supabase.from('users').select('*');
         return { value: users }
@@ -32,6 +33,36 @@ app.post("/users", async (req, res) => {
         console.log(error)
     }
 });
+
+app.put("/users/:id", async (req, res) => {
+    try{
+        const { id } = req.params as users
+        const { name, email } = req.body as users
+        const { data: updatedUser } = await supabase.from('users').update([{
+            name,
+            email
+        }]).eq('id', id).select()
+
+        return {
+            value: updatedUser ? updatedUser[0] : null
+        }
+    } catch (error) {
+        console.log(error)
+    }
+});
+
+app.delete("/users/:id", async (req, res) => {
+    try{
+        const { id } = req.params as users
+        const { data: deletedUser } = await supabase.from('users').delete().eq('id', id).select()
+        
+        return {
+            value: deletedUser ? deletedUser[0] : null
+        }
+    } catch (error) {
+        console.log(error)
+    }
+})
 
 app.listen({
     host: '0.0.0.0',
