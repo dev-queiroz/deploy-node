@@ -12,7 +12,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "",
   "description": "",
   "dependencies": {
     "@supabase/supabase-js": "^2.44.4",
